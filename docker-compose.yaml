@@ -1,0 +1,23 @@
+services:
+  palxe.postgres:
+    image: postgres:16
+    container_name: palxe.postgres
+    hostname: palxe.postgres
+    ports:
+      - "5432:5432"
+    restart: on-failure:3
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: palxe_dev
+    volumes:
+      - ./_dumpdata/postgres:/var/lib/postgresql/data
+    networks:
+      - palxe-network
+
+volumes:
+  _dumpdata:
+
+networks:
+  palxe-network:
+    driver: bridge
