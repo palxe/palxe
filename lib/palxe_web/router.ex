@@ -4,6 +4,7 @@ defmodule PalxeWeb.Router do
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
+    plug PalxeWeb.Plugs.PlayerId
     plug :fetch_live_flash
     plug :put_root_layout, html: {PalxeWeb.Layouts, :root}
     plug :protect_from_forgery
@@ -17,7 +18,7 @@ defmodule PalxeWeb.Router do
   scope "/", PalxeWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", PlaceLive
   end
 
   # Other scopes may use custom stacks.

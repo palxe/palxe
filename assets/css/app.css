@@ -103,3 +103,61 @@
 [data-phx-session], [data-phx-teleported-src] { display: contents }
 
 /* This file is for your main application CSS */
+
+/* ---- Palxe canvas ---- */
+.pixelated {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Selection reticle: corner brackets around the chosen pixel, with a
+   translucent preview of the chosen color once one is picked. */
+.place-reticle {
+  --reticle-color: transparent;
+  outline: 2px solid rgb(0 0 0 / 0.85);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgb(255 255 255 / 0.85);
+  border-radius: 2px;
+  transition: background-color 150ms ease;
+  animation: place-reticle-pulse 1.4s ease-in-out infinite;
+}
+
+.place-reticle.has-color {
+  background: color-mix(in srgb, var(--reticle-color) 85%, transparent);
+}
+
+@keyframes place-reticle-pulse {
+  0%, 100% { outline-offset: 2px; }
+  50% { outline-offset: 4px; }
+}
+
+/* Small ring that expands from a freshly placed pixel. */
+.place-burst {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 9999px;
+  border: 3px solid #ff4500;
+  pointer-events: none;
+  animation: place-burst 650ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes place-burst {
+  from { transform: scale(0.4); opacity: 1; }
+  to { transform: scale(6); opacity: 0; }
+}
+
+/* Bottom panel slide-in */
+.place-panel {
+  animation: place-panel-in 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes place-panel-in {
+  from { transform: translateY(16px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .place-reticle, .place-burst, .place-panel { animation: none; }
+}
