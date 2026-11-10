@@ -31,35 +31,33 @@ defmodule PalxeWeb.Layouts do
     default: nil,
     doc: "the current [scope](https://hexdocs.pm/phoenix/scopes.html)"
 
+  attr :fullscreen, :boolean,
+    default: false,
+    doc: "render content edge-to-edge without the header (used by the canvas)"
+
   slot :inner_block, required: true
+
+  def app(%{fullscreen: true} = assigns) do
+    ~H"""
+    <main class="fixed inset-0 overflow-hidden">
+      {render_slot(@inner_block)}
+    </main>
+
+    <.flash_group flash={@flash} />
+    """
+  end
 
   def app(assigns) do
     ~H"""
-    <header class="navbar px-4 sm:px-6 lg:px-8">
-      <div class="flex-1">
-        <a href="/" class="flex-1 flex w-fit items-center gap-2">
-          <img src={~p"/images/logo.svg"} width="36" />
-          <span class="text-sm font-semibold">v{Application.spec(:phoenix, :vsn)}</span>
-        </a>
-      </div>
-      <div class="flex-none">
-        <ul class="flex flex-column px-1 space-x-4 items-center">
-          <li>
-            <a href="https://phoenixframework.org/" class="btn btn-ghost">Website</a>
-          </li>
-          <li>
-            <a href="https://github.com/phoenixframework/phoenix" class="btn btn-ghost">GitHub</a>
-          </li>
-          <li>
-            <.theme_toggle />
-          </li>
-          <li>
-            <a href="https://hexdocs.pm/phoenix/overview.html" class="btn btn-primary">
-              Get Started <span aria-hidden="true">&rarr;</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+    <header class="flex items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+      <a href="/" class="flex items-center gap-2 font-semibold tracking-tight">
+        <span class="grid size-7 grid-cols-2 grid-rows-2 overflow-hidden rounded-md">
+          <span class="bg-[#FF4500]"></span><span class="bg-[#FFD635]"></span>
+          <span class="bg-[#3690EA]"></span><span class="bg-[#00A368]"></span>
+        </span>
+        Palxe
+      </a>
+      <.theme_toggle />
     </header>
 
     <main class="px-4 py-20 sm:px-6 lg:px-8">

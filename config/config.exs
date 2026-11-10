@@ -11,6 +11,14 @@ config :palxe,
   ecto_repos: [Palxe.Repo],
   generators: [timestamp_type: :utc_datetime]
 
+# The shared pixel canvas
+config :palxe, Palxe.Place,
+  width: 500,
+  height: 500,
+  cooldown_ms: 5_000,
+  snapshot_interval_ms: 5_000,
+  persist: true
+
 # Configures the endpoint
 config :palxe, PalxeWeb.Endpoint,
   url: [host: "localhost"],

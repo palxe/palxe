@@ -12,8 +12,7 @@ defmodule Palxe.Application do
       Palxe.Repo,
       {DNSCluster, query: Application.get_env(:palxe, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Palxe.PubSub},
-      # Start a worker by calling: Palxe.Worker.start_link(arg)
-      # {Palxe.Worker, arg},
+      Palxe.Place.Canvas,
       # Start to serve requests, typically the last entry
       PalxeWeb.Endpoint
     ]
